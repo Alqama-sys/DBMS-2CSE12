@@ -173,25 +173,3 @@ DESC Student;
 ```
 
 ---
-
-## Result
-
-The database **iilm** and table **Student** were successfully created. Records were inserted and retrieved using SQL queries.
-
----
-
-## Conclusion
-
-This experiment helped in understanding basic SQL commands, data types, constraints, and table operations using MySQL.
-
----
-
-## Viva Questions (Practice)
-
-1. What is the difference between DDL and DML?
-2. What is a PRIMARY KEY?
-3. What is the use of CHECK constraint?
-4. Difference between CHAR and VARCHAR?
-5. What is a transaction?
-
----
