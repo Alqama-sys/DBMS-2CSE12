@@ -484,216 +484,239 @@ MariaDB [alqama]> SELECT ENAME, DEPTNO
 SELECT * FROM EMPLOYEE;
 ```
 
-### QUERY 1: List all distinct jobs in Employee
-
-```sql
-SELECT DISTINCT JOB
-FROM Employee;
-```
-
-```text
-MariaDB [alqama]> SELECT DISTINCT JOB
-    -> FROM EMPLOYEE;
-+-----------+
-| JOB       |
-+-----------+
-| CLERK     |
-| SALESMAN  |
-| MANAGER   |
-| ANALYST   |
-| PRESIDENT |
-+-----------+
-```
-
-### QUERY 2: List all information about employee in Department Number 30
-
-```sql
-SELECT *
-FROM Employee
-WHERE DEPTNO = 30;
-```
-
-```text
-MariaDB [alqama]> SELECT *Vv
-    -> FROM EMPLOYEE
-    -> WHERE DEPTNO = 30;
-+-------+--------+----------+------+------------+---------+---------+--------+
-| EMPNO | ENAME  | JOB      | MGR  | HIREDATE   | SAL     | COMM    | DEPTNO |
-+-------+--------+----------+------+------------+---------+---------+--------+
-|  7499 | ALLEN  | SALESMAN | 7698 | 1981-02-20 | 1600.00 |  300.00 |     30 |
-|  7521 | WARD   | SALESMAN | 7698 | 1981-02-22 | 1250.00 |  300.00 |     30 |
-|  7654 | MARTIN | SALESMAN | 7698 | 1981-09-28 | 1250.00 | 1400.00 |     30 |
-|  7698 | BLAKE  | MANAGER  | 7839 | 1981-05-01 | 2850.00 |    NULL |     30 |
-|  7844 | TURNER | SALESMAN | 7698 | 1981-09-08 | 1500.00 |    0.00 |     30 |
-|  7900 | JAMES  | CLERK    | 7698 | 1981-12-03 |  950.00 |    NULL |     30 |
-+-------+--------+----------+------+------------+---------+---------+--------+
-```
-
-### QUERY 3: Find department number with department names greater than 20
-
-```sql
-SELECT DEPTNO, DNAME
-FROM Department
-WHERE DEPTNO > 20;
-```
-
-```text
-MariaDB [alqama]> SELECT DEPTNO, DNAME
-    -> FROM DEPARTMENT
-    -> WHERE DEPTNO > 20;
-+--------+------------+
-| DEPTNO | DNAME      |
-+--------+------------+
-|     30 | SALES      |
-|     40 | OPERATIONS |
-+--------+------------+
-```
-
-### QUERY 4: Find all managers as well as clerks in department 30
-
-```sql
-SELECT *
-FROM Employee
-WHERE DEPTNO = 30
-AND JOB IN ('MANAGER', 'CLERK');
-```
-
-```text
-MariaDB [alqama]> SELECT *
-    -> FROM EMPLOYEE
-    -> WHERE DEPTNO = 30
-    -> AND (JOB = 'MANAGER' OR JOB = 'CLERK');
-+-------+-------+---------+------+------------+---------+------+--------+
-| EMPNO | ENAME | JOB     | MGR  | HIREDATE   | SAL     | COMM | DEPTNO |
-+-------+-------+---------+------+------------+---------+------+--------+
-|  7698 | BLAKE | MANAGER | 7839 | 1981-05-01 | 2850.00 | NULL |     30 |
-|  7900 | JAMES | CLERK   | 7698 | 1981-12-03 |  950.00 | NULL |     30 |
-+-------+-------+---------+------+------------+---------+------+--------+
-```
-
-### QUERY 5: List employee name, employee number and department of all clerks
-
-```sql
-SELECT EMPNO, ENAME, DEPTNO
-FROM Employee
-WHERE JOB = 'CLERK';
-```
-
-```text
-MariaDB [alqama]> SELECT EMPNO, ENAME, DEPTNO
-    -> FROM EMPLOYEE
-    -> WHERE JOB = 'CLERK';
-+-------+--------+--------+
-| EMPNO | ENAME  | DEPTNO |
-+-------+--------+--------+
-|  7369 | SMITH  |     20 |
-|  7876 | ADAMS  |     20 |
-|  7900 | JAMES  |     30 |
-|  7934 | MILLER |     10 |
-+-------+--------+--------+
-```
-
-### QUERY 6: Find all managers not in department 30
-
-```sql
-SELECT *
-FROM Employee
-WHERE JOB = 'MANAGER'
-AND DEPTNO <> 30;
-```
-
-```text
-MariaDB [alqama]> SELECT *
-    -> FROM EMPLOYEE
-    -> WHERE JOB = 'MANAGER'
-    -> AND DEPTNO <> 30;
-+-------+-------+---------+------+------------+---------+------+--------+
-| EMPNO | ENAME | JOB     | MGR  | HIREDATE   | SAL     | COMM | DEPTNO |
-+-------+-------+---------+------+------------+---------+------+--------+
-|  7566 | JONES | MANAGER | 7839 | 1981-04-02 | 2975.00 | NULL |     20 |
-|  7782 | CLARK | MANAGER | 7839 | 1981-06-09 | 2450.00 | NULL |     20 |
-+-------+-------+---------+------+------------+---------+------+--------+
-```
-
-### QUERY 7: Employees in department 10 who are not manager or clerk
-
-```sql
-SELECT *
-FROM Employee
-WHERE DEPTNO = 10
-AND JOB NOT IN ('MANAGER', 'CLERK');
-```
-
-MariaDB [alqama]> SELECT *
-    -> FROM EMPLOYEE
-    -> WHERE DEPTNO = 10
-    -> AND JOB NOT IN ('MANAGER','CLERK');
-
-### QUERY 8: Employees and jobs earning between 1200 and 1400
+### Query 1: List all employees and their jobs in Department 30, sorted by salary in descending order
 
 ```sql
 SELECT ENAME, JOB, SAL
-FROM Employee
-WHERE SAL BETWEEN 1200 AND 1400;
+FROM EMPLOYEE
+WHERE DEPTNO = 30
+ORDER BY SAL DESC;
 ```
 
 ```text
 MariaDB [alqama]> SELECT ENAME, JOB, SAL
     -> FROM EMPLOYEE
-    -> WHERE SAL BETWEEN 1200 AND 1400;
+    -> WHERE DEPTNO = 30
+    -> ORDER BY SAL DESC;
 +--------+----------+---------+
 | ENAME  | JOB      | SAL     |
 +--------+----------+---------+
+| BLAKE  | MANAGER  | 2850.00 |
+| ALLEN  | SALESMAN | 1600.00 |
+| TURNER | SALESMAN | 1500.00 |
 | WARD   | SALESMAN | 1250.00 |
 | MARTIN | SALESMAN | 1250.00 |
-| MILLER | CLERK    | 1300.00 |
+| JAMES  | CLERK    |  950.00 |
 +--------+----------+---------+
 ```
 
-### QUERY 9: Name and department number of clerks, analysts or salesman
+### Query 2: List Job and Department Number of employees whose names are exactly five letters long, start with “A” and end with “N”
 
 ```sql
-SELECT ENAME, DEPTNO
-FROM Employee
-WHERE JOB IN ('CLERK', 'ANALYST', 'SALESMAN');
+SELECT JOB, DEPTNO
+FROM EMPLOYEE
+WHERE ENAME LIKE 'A___N';
 ```
 
 ```text
-MariaDB [alqama]> SELECT ENAME, DEPTNO
+MariaDB [alqama]> SELECT JOB, DEPTNO
     -> FROM EMPLOYEE
-    -> WHERE JOB IN ('CLERK','ANALYST','SALESMAN');
-+--------+--------+
-| ENAME  | DEPTNO |
-+--------+--------+
-| SMITH  |     20 |
-| ALLEN  |     30 |
-| WARD   |     30 |
-| MARTIN |     30 |
-| SCOTT  |     40 |
-| TURNER |     30 |
-| ADAMS  |     20 |
-| JAMES  |     30 |
-| FORD   |     20 |
-| MILLER |     10 |
-+--------+--------+  
+    -> WHERE ENAME LIKE 'A___N';
++----------+--------+
+| JOB      | DEPTNO |
++----------+--------+
+| SALESMAN |     30 |
++----------+--------+
 ```
 
-### QUERY 10: Name and department number of employees whose names begin with M
+### QUERY 3: Display the names of employees whose name starts with the alphabet ‘S’
 
 ```sql
-SELECT ENAME, DEPTNO
-FROM Employee
-WHERE ENAME LIKE 'M%';
+SELECT ENAME
+FROM EMPLOYEE
+WHERE ENAME LIKE 'S%';
 ```
 
 ```text
-MariaDB [alqama]> SELECT ENAME, DEPTNO
+MariaDB [alqama]> SELECT ENAME
     -> FROM EMPLOYEE
-    -> WHERE ENAME LIKE 'M%';
-+--------+--------+
-| ENAME  | DEPTNO |
-+--------+--------+
-| MARTIN |     30 |
-| MILLER |     10 |
-+--------+--------+
+    -> WHERE ENAME LIKE 'S%';
++-------+
+| ENAME |
++-------+
+| SMITH |
+| SCOTT |
++-------+
+```
+
+### QUERY 4: Display the names of employees whose name ends with the alphabet ‘S’
+
+```sql
+SELECT ENAME
+FROM EMPLOYEE
+WHERE ENAME LIKE '%S';
+```
+
+```text
+MariaDB [alqama]> SELECT ENAME
+    -> FROM EMPLOYEE
+    -> WHERE ENAME LIKE '%S';
++-------+
+| ENAME |
++-------+
+| JONES |
+| ADAMS |
+| JAMES |
++-------+
+```
+
+### QUERY 5: Display the names of employees working in Department 10, 20, or 40 OR working as Clerks, Salesman, or Analyst
+
+```sql
+SELECT ENAME
+FROM EMPLOYEE
+WHERE DEPTNO IN (10, 20, 40)
+   OR JOB IN ('CLERK', 'SALESMAN', 'ANALYST');
+```
+
+```text
+MariaDB [alqama]> SELECT ENAME
+    -> FROM EMPLOYEE
+    -> WHERE DEPTNO IN (10, 20, 40)
+    ->    OR JOB IN ('CLERK', 'SALESMAN', 'ANALYST');
++--------+
+| ENAME  |
++--------+
+| SMITH  |
+| ALLEN  |
+| WARD   |
+| JONES  |
+| MARTIN |
+| CLARK  |
+| SCOTT  |
+| KING   |
+| TURNER |
+| ADAMS  |
+| JAMES  |
+| FORD   |
+| MILLER |
++--------+
+```
+
+### QUERY 6: Display employee number and names of employees who earn commission
+
+```sql
+SELECT EMPNO, ENAME
+FROM EMPLOYEE
+WHERE COMM IS NOT NULL
+  AND COMM > 0;
+```
+
+```text
+MariaDB [alqama]> SELECT EMPNO, ENAME
+    -> FROM EMPLOYEE
+    -> WHERE COMM IS NOT NULL
+    ->   AND COMM > 0;
++-------+--------+
+| EMPNO | ENAME  |
++-------+--------+
+|  7499 | ALLEN  |
+|  7521 | WARD   |
+|  7654 | MARTIN |
++-------+--------+
+```
+
+### QUERY 7: Display employee number and total salary for each employee
+
+```sql
+SELECT EMPNO,
+       SAL + IFNULL(COMM, 0) AS TOTAL_SALARY
+FROM EMPLOYEE;
+```
+
+MariaDB [alqama]> SELECT EMPNO,
+    ->        SAL + IFNULL(COMM, 0) AS TOTAL_SALARY
+    -> FROM EMPLOYEE;
+
+```text
++-------+--------------+
+| EMPNO | TOTAL_SALARY |
++-------+--------------+
+|  7369 |       800.00 |
+|  7499 |      1900.00 |
+|  7521 |      1550.00 |
+|  7566 |      2975.00 |
+|  7654 |      2650.00 |
+|  7698 |      2850.00 |
+|  7782 |      2450.00 |
+|  7788 |      3000.00 |
+|  7839 |      5000.00 |
+|  7844 |      1500.00 |
+|  7876 |      1100.00 |
+|  7900 |       950.00 |
+|  7902 |      3000.00 |
+|  7934 |      1300.00 |
++-------+--------------+
+```
+
+### QUERY 8: Display employee number and annual salary for each employee
+
+```sql
+SELECT EMPNO,
+       SAL * 12 AS ANNUAL_SALARY
+FROM EMPLOYEE;
+```
+
+```text
+MariaDB [alqama]> SELECT EMPNO,
+    ->        SAL * 12 AS ANNUAL_SALARY
+    -> FROM EMPLOYEE;
++-------+---------------+
+| EMPNO | ANNUAL_SALARY |
++-------+---------------+
+|  7369 |       9600.00 |
+|  7499 |      19200.00 |
+|  7521 |      15000.00 |
+|  7566 |      35700.00 |
+|  7654 |      15000.00 |
+|  7698 |      34200.00 |
+|  7782 |      29400.00 |
+|  7788 |      36000.00 |
+|  7839 |      60000.00 |
+|  7844 |      18000.00 |
+|  7876 |      13200.00 |
+|  7900 |      11400.00 |
+|  7902 |      36000.00 |
+|  7934 |      15600.00 |
++-------+---------------+
+```
+
+### QUERY 9: Display the names of employees who are working as Clerks and drawing a salary more than 3000
+
+```sql
+SELECT ENAME
+FROM EMPLOYEE
+WHERE JOB = 'CLERK'
+  AND SAL > 3000;
+```
+
+```text
+Empty set (0.003 sec)
+
+MariaDB [alqama]>
+```
+
+### QUERY 10: Display the names of employees who are working as Clerk, Salesman, or Analyst and drawing a salary more than 3000
+
+```sql
+SELECT ENAME
+FROM EMPLOYEE
+WHERE JOB IN ('CLERK', 'SALESMAN', 'ANALYST')
+  AND SAL > 3000;
+```
+
+```text
+Empty set (0.002 sec)
+
+MariaDB [alqama]> 
 ```
